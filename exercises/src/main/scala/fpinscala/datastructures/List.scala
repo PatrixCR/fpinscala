@@ -70,7 +70,17 @@ object List { // `List` companion object. Contains functions for creating and wo
     loop(l, n)
   }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
+    @annotation.tailrec
+    def loop(l: List[A], f: A => Boolean): List[A] = {
+      l match {
+        case Cons(h, t) if f(h) => loop(t, f)
+        case _ => l
+      }
+    }
+
+    loop(l, f)
+  }
 
   def init[A](l: List[A]): List[A] = ???
 
