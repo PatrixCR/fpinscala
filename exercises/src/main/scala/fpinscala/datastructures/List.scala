@@ -82,7 +82,17 @@ object List { // `List` companion object. Contains functions for creating and wo
     loop(l, f)
   }
 
-  def init[A](l: List[A]): List[A] = ???
+  def init[A](l: List[A]): List[A] = {
+    def loop(l: List[A]): List[A] = {
+      l match {
+        case Cons(_, t) if t == Nil => Nil
+        case Nil => Nil
+        case Cons(h, t) => Cons(h, loop(t))
+      }
+    }
+
+    loop(l)
+  }
 
   def length[A](l: List[A]): Int = ???
 
