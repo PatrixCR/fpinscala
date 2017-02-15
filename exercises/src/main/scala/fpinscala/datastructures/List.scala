@@ -106,5 +106,9 @@ object List { // `List` companion object. Contains functions for creating and wo
     loop(l, z)(f)
   }
 
+  def sum3(ns: List[Int]) = foldLeft(ns, 0)(_ + _)
+  def product3(ns: List[Double]) = foldLeft(ns, 1.0)( _ * _)
+  def length2[A](l: List[A]): Int = foldLeft(l, 0)((count, _) => count + 1)
+
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
