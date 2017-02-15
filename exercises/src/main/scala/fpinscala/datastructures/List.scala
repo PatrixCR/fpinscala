@@ -72,31 +72,39 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
     @annotation.tailrec
-    def loop(l: List[A], f: A => Boolean): List[A] = {
+    def loop(l: List[A], f: A => Boolean): List[A] =
       l match {
         case Cons(h, t) if f(h) => loop(t, f)
         case _ => l
       }
-    }
 
     loop(l, f)
   }
 
   def init[A](l: List[A]): List[A] = {
-    def loop(l: List[A]): List[A] = {
+    def loop(l: List[A]): List[A] =
       l match {
         case Cons(_, t) if t == Nil => Nil
         case Nil => Nil
         case Cons(h, t) => Cons(h, loop(t))
       }
-    }
+
 
     loop(l)
   }
 
   def length[A](l: List[A]): Int = foldRight(l, 0)((_, count) => count + 1)
 
-  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
+  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = {
+    @annotation.tailrec
+    def loop(l: List[A], z: B)(f: (B, A) => B): B =
+      l match {
+        case Nil => z
+        case Cons(h, t) => loop(t, f(z, h))(f)
+      }
+
+    loop(l, z)(f)
+  }
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
