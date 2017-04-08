@@ -96,7 +96,7 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def append2[A](a1: List[A], a2: List[A]): List[A] = foldRight(a1, a2)(Cons(_, _))
 
-  def concat[A](l: List[List[A]]): List[A] = foldRight(l, Nil:List[A])(append2(_, _))
+  def concat[A](l: List[List[A]]): List[A] = foldRight(l, Nil:List[A])(append2)
 
   def add1(l: List[Int]): List[Int] = foldRight(l, Nil:List[Int])((a, b) => Cons(a + 1, b))
 
@@ -106,7 +106,7 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def filter[A](as: List[A])(f: A => Boolean): List[A] = foldRight(as, Nil:List[A])((a, b) => if (f(a)) Cons(a, b) else b)
 
-  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = concat(map(as)(a => f(a)))
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = concat(map(as)(f))
 
   def filter2[A](as: List[A])(f: A => Boolean): List[A] = flatMap(as)(a => if (f(a)) Cons(a, Nil) else Nil)
 }
