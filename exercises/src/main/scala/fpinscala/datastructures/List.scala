@@ -109,4 +109,10 @@ object List { // `List` companion object. Contains functions for creating and wo
   def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = concat(map(as)(f))
 
   def filter2[A](as: List[A])(f: A => Boolean): List[A] = flatMap(as)(a => if (f(a)) Cons(a, Nil) else Nil)
+
+  def addCorresponding(l1: List[Int], l2: List[Int]): List[Int] =
+    (l1, l2) match {
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addCorresponding(t1, t2))
+      case _ => Nil
+    }
 }
