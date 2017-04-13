@@ -121,4 +121,21 @@ object List { // `List` companion object. Contains functions for creating and wo
       case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
       case _ => Nil
     }
+
+  @annotation.tailrec
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+
+    @annotation.tailrec
+    def isPrefixedWith(sup: List[A], sub: List[A]): Boolean = (sup, sub) match {
+      case (_, Nil) => true
+      case (Cons(supH, supT), Cons(subH, subT)) => if (supH == subH) isPrefixedWith(supT, subT) else false
+      case _ => false
+    }
+
+    (sup, isPrefixedWith(sup, sub)) match {
+      case (_, true) => true
+      case (Cons(supH, supT), false) => hasSubsequence(supT, sub)
+      case _ => false
+    }
+  }
 }
