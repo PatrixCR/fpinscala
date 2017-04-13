@@ -12,4 +12,14 @@ object Tree {
       case Leaf(_) => 1
       case Branch(l, r) => size(l) + size(r) + 1
     }
+
+  def maximum(tree: Tree[Int]): Int = {
+    def max(tree: Tree[Int], currentMax: Int): Int =
+      tree match {
+        case Leaf(a) => a.max(currentMax)
+        case Branch(l, r) => max(l, currentMax).max(max(r, currentMax))
+      }
+
+    max(tree, Int.MinValue)
+  }
 }
