@@ -22,4 +22,14 @@ object Tree {
 
     max(tree, Int.MinValue)
   }
+
+  def depth(tree: Tree[Int]): Int = {
+    def depth(tree: Tree[Int], currentDepth: Int): Int =
+      tree match {
+        case Leaf(_) => currentDepth + 1
+        case Branch(l, r) => depth(l, currentDepth + 1).max(depth(r, currentDepth + 1))
+      }
+
+    depth(tree, 0)
+  }
 }
