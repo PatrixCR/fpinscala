@@ -40,6 +40,9 @@ trait Stream[+A] {
   def forAll(p: A => Boolean): Boolean = this.foldRight(true)(
     (a, b) => p(a) && b)
 
+  def takeWhile2(p: A => Boolean): Stream[A] = this.foldRight(Stream.empty[A])(
+    (a, s) => if (p(a)) Stream.cons(a, s) else Stream.empty[A])
+
   def headOption: Option[A] = ???
 
   // 5.7 map, filter, append, flatmap using foldRight. Part of the exercise is
