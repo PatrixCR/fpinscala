@@ -37,7 +37,8 @@ trait Stream[+A] {
       case _ => Stream.empty[A]
     }
 
-  def forAll(p: A => Boolean): Boolean = ???
+  def forAll(p: A => Boolean): Boolean = this.foldRight(true)(
+    (a, b) => p(a) && b)
 
   def headOption: Option[A] = ???
 
