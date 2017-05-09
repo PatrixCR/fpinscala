@@ -43,7 +43,7 @@ trait Stream[+A] {
   def takeWhile2(p: A => Boolean): Stream[A] = this.foldRight(Stream.empty[A])(
     (a, s) => if (p(a)) Stream.cons(a, s) else Stream.empty[A])
 
-  def headOption: Option[A] = ???
+  def headOption: Option[A] = this.foldRight(None:Option[A])((a, _) => Some(a))
 
   // 5.7 map, filter, append, flatmap using foldRight. Part of the exercise is
   // writing your own function signatures.
