@@ -79,5 +79,10 @@ object Stream {
 
   def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
 
+  def fibs(): Stream[Int] = {
+    def fibsInternal(i: Int, j: Int): Stream[Int] = Stream.cons(i, fibsInternal(j, i + j))
+    fibsInternal(0, 1)
+  }
+
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = ???
 }
