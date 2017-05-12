@@ -86,4 +86,12 @@ object Stream {
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] =
     f(z).map { case (a, s) => Stream.cons(a, unfold(s)(f)) }.getOrElse(Stream.empty[A])
+
+  val ones2: Stream[Int] = Stream.unfold(1)(s => Some((s, s)))
+
+  def constant2[A](a: A): Stream[A] = Stream.unfold(a)(s => Some(s, s))
+
+  def from2(n: Int): Stream[Int] = Stream.unfold(n)(s => Some(s, s + 1))
+
+  def fibs2(): Stream[Int] = Stream.unfold(0, 1)(s => Some(s._1, (s._2, s._1 + s._2)))
 }
