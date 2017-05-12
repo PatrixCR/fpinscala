@@ -84,5 +84,6 @@ object Stream {
     fibsInternal(0, 1)
   }
 
-  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = ???
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] =
+    f(z).map { case (a, s) => Stream.cons(a, unfold(s)(f)) }.getOrElse(Stream.empty[A])
 }
