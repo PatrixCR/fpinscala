@@ -81,7 +81,12 @@ object RNG {
     (f(a, b), rng3)
   }
 
-  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = fs.foldLeft(unit(List.empty[A])) {
+    case (rla, ra) =>
+      map2(ra, rla)(_ :: _)
+  }
+
+  def ints2(count: Int)(rng: RNG): (List[Int], RNG) = sequence(List.fill(count)(int))(rng)
 
   def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = ???
 }
