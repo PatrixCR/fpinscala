@@ -56,6 +56,11 @@ object Par {
   }
 
   def asyncF[A,B](f: A => B): A => Par[B] = (a: A) => lazyUnit(f(a))
+
+  def sequence[A](ps: List[Par[A]]): Par[List[A]] =
+    ps.foldRight(
+      unit(List.empty[A]): Par[List[A]])(
+      map2(_, _)(_ :: _))
 }
 
 object Examples {
