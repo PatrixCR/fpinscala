@@ -61,6 +61,9 @@ object Par {
     ps.foldRight(
       unit(List.empty[A]): Par[List[A]])(
       map2(_, _)(_ :: _))
+
+  def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] =
+    map(sequence(as.map(asyncF(a => if (f(a)) List(a) else List()))))(_.flatten)
 }
 
 object Examples {
