@@ -14,6 +14,10 @@ shell, which you can fill in and modify while working through the chapter.
 */
 
 trait Prop {
+  def check: Boolean
+  def &&(prop: Prop): Prop = new Prop {
+    def check: Boolean = Prop.this.check && prop.check
+  }
 }
 
 object Prop {
